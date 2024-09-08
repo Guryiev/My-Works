@@ -7,7 +7,7 @@ local GL = script.Parent.Background.GameLogo
 -- Get the TweenService, which is used to animate GUI properties smoothly
 local TweenService = game:GetService("TweenService")
 
--- Define the starting position for the GameLogo (off-screen, slightly above the bottom)
+-- Define the starting position for the GameLogo (off-screen, slightly above)
 local startPosition = UDim2.new(0.5, 0, -0.5, 0)
 
 -- Define the ending position for the GameLogo (where it will be smoothly animated to)
