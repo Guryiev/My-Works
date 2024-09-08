@@ -1,0 +1,33 @@
+--EXAMPLE IF YOU WANT TO MAKE WELCOME MESSAGE LIKE THIS ("Welcome [player]!")
+
+-- Reference to the TextLabel object (assumed to be the parent of this script)
+local textLabel = script.Parent
+
+-- Function to update the TextLabel with the player's name
+local function updatePlayerName(player)
+
+	-- Check if the player and their character exist
+	if player and player.Character then
+		
+		-- Get the player's name
+		local playerName = player.Name
+
+		-- Replace the placeholder "[player]" in the TextLabel's text with the actual player name
+		textLabel.Text = string.gsub(textLabel.Text, "%[player%]", playerName)
+	end
+end
+
+-- Function that runs when a new player is added to the game
+local function onPlayerAdded(player)
+
+	-- Call the updatePlayerName function to update the player's name in the TextLabel
+	updatePlayerName(player)
+end
+
+-- Connect the onPlayerAdded function to the PlayerAdded event
+-- This event is fired whenever a new player joins the game
+game.Players.PlayerAdded:Connect(onPlayerAdded)
+
+-- Update the TextLabel with the local player's name when the script runs
+-- (This will set the player's name for the player who is already in the game)
+updatePlayerName(game.Players.LocalPlayer)
