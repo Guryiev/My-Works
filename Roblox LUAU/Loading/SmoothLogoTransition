@@ -1,0 +1,36 @@
+-- Reference the sound object (assumed to be a sound named "Chain" inside the "Background")
+local Sound = script.Parent.Background.Chain
+
+-- Reference the GameLogo (assumed to be an image or frame named "GameLogo" inside the "Background")
+local GL = script.Parent.Background.GameLogo
+
+-- Get the TweenService, which is used to animate GUI properties smoothly
+local TweenService = game:GetService("TweenService")
+
+-- Define the starting position for the GameLogo (off-screen, slightly above the bottom)
+local startPosition = UDim2.new(0.5, 0, -0.5, 0)
+
+-- Define the ending position for the GameLogo (where it will be smoothly animated to)
+local endPosition = UDim2.new(0.5, 0, 0.2, 0)
+
+-- Define the tween info: the duration, easing style, easing direction, repeat count, reverses, and delay
+local tweenInfo = TweenInfo.new(
+	2,                              -- Time (in seconds) for the tween to complete
+	Enum.EasingStyle.Sine,           -- Easing style (smooth and gradual transition)
+	Enum.EasingDirection.Out,        -- Easing direction (slows down at the end)
+	0,                              -- Repeat count (0 means it runs only once)
+	false,                          -- Reverses (false means it won't reverse after completing)
+	0                               -- Delay before starting the tween (0 means no delay)
+)
+
+-- Create the tween for animating the GameLogo's Position property from the startPosition to the endPosition
+local tween = TweenService:Create(GL, tweenInfo, {Position = endPosition})
+
+-- Set the GameLogo's initial position to the startPosition
+GL.Position = startPosition
+
+-- Play the sound (assumed to be a sound effect that plays during or before the tween)
+Sound:Play()
+
+-- Play the tween to animate the GameLogo from its starting position to the end position
+tween:Play()
