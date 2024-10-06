@@ -1,0 +1,38 @@
+-- Get the "Filler" object inside the LoadingBar
+local filler = script.Parent.LoadingBar:WaitForChild("Filler") 
+
+-- Get the "Top" object inside the "Filler"
+local top = filler:WaitForChild("Top") 
+
+-- Define the function to resize the custom loading bar
+-- sizeRatio: determines how much the bar should be filled
+-- clipping: the part of the loading bar that gets filled
+-- top: the top layer of the loading bar that scales differently based on sizeRatio
+function resizeCustomLoadingBar(sizeRatio, clipping, top)
+
+    -- Resize the 'clipping' part based on the sizeRatio while keeping the Y scale the same
+    clipping.Size = UDim2.new(sizeRatio, clipping.Size.X.Offset, clipping.Size.Y.Scale, clipping.Size.Y.Offset)
+    
+    -- Resize the 'top' part; it's scaled inversely based on sizeRatio (but protected to avoid dividing by zero)
+    top.Size = UDim2.new((sizeRatio > 0 and 1 / sizeRatio) or 0, top.Size.X.Offset, top.Size.Y.Scale, top.Size.Y.Offset)
+    -- The extra check ensures we don't attempt 1 / 0, which would be undefined
+end
+
+-- Start a loop from 1 to 100 to simulate a loading process
+for i = 1, 100 do
+    -- Wait for 0.04 seconds between each loop iteration to create the effect of a gradual increase
+    wait(0.04)
+
+    -- Calculate the current loading percentage as a value between 0 and 1
+    local formula = i / 100
+
+    -- Animate the "filler" part of the loading bar using TweenSize
+    -- This gradually increases its size based on the formula
+    filler:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.1, true)
+
+    -- Introduce random delays at certain points to make the loading bar pause, simulating uneven loading times
+    if i == math.random(1, 20) or i == math.random(21, 45) or i == math.random(46, 78) or i == math.random(79, 95) then
+        -- If the current index matches any of the randomly generated numbers, wait for 0.3 seconds
+        wait(0.3)
+    end
+end
